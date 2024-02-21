@@ -125,6 +125,50 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/* ? Login CSS */
+.main_login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    font-family: 'syne';
+    height: 50em;
+    margin: 0;
+    padding: 0;
+}
+.login_title {
+    color: #1D6154;
+}   
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 300px;
+    height: 300px;   
+}
+.login_text {
+    margin-bottom: -1em;
+}   
+.login_input {
+    height: 3em;
+    border: none;
+    box-shadow: 0px 2px 2px 2px rgb(149, 149, 149);
+}
+.login_button {
+    background-color: #1D6154;
+    color: white;
+    height: 3em;
+    border: none;
+    font-family: 'syne';
+    border-radius: 20px;
+}
+.login_link {
+    text-align: center;
+    color: #1D6154;
+
+}
 .filter {
 	display: flex;
 	justify-content: center;

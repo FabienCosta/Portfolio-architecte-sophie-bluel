@@ -2,7 +2,6 @@
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("current-password");
 const loginButton = document.querySelector(".login_button");
-
 // ? evenement sur le bouton de connexion
 const loginForm = document.querySelector(".login_form");
 loginForm.addEventListener("submit", async (e) => {
@@ -37,7 +36,7 @@ try {
   }
    
 });
-// ? gerer les erreurs si le formulaire n'est pas bien rempli
-// ? mettre un try/catch pour gerer les erreurs
 // ? factoriser le code
 // ? commenter le code
+// ? tester le code
+// ? gerer le logout

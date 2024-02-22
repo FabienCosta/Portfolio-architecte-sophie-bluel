@@ -132,7 +132,8 @@ li:hover {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: white;
+    /* background-color: white; */
+	background-color: rgb(77, 76, 76);
     font-family: 'syne';
     height: 50em;
     margin: 0;
@@ -141,7 +142,7 @@ li:hover {
 .login_title {
     color: #1D6154;
 }   
-.form {
+.login_form {
     display: flex;
     flex-direction: column;
     justify-content: space-around;

@@ -25,11 +25,11 @@
     </header>
     <main class="main_login">
         <h1 class="login_title">Log In</h1>
-        <form  method="post" class="form" id="form">
+        <form  method="post" class="login_form" id="form">
             <label for="email" class="login_text">E-mail</label>
-            <input type="email" class="login_input" id="email" name="email">
+            <input type="email" class="login_input" id="email" name="email" autocomplete="email">
             <label for="current-password" class="login_text">Mot de passe</label>
-            <input type="current-password" class="login_input" id="current-password" name="current-password">
+            <input type="current-password" class="login_input" id="current-password" name="current-password" require autocomplete="current-password">
             <button class="login_button">Se connecter</button>
             <a class="login_link">Mot de passe oublié</a>
         </form>

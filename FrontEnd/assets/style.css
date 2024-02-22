@@ -142,6 +142,16 @@ li:hover {
 .login_title {
     color: #1D6154;
 }   
+.login_error_msg {
+	padding: 1% 0% 0% 0%;
+	color: red;
+	text-align: center;
+}
+.login_error_msg2 {
+	padding: 1% 0% 0% 0%;
+	color: red;
+	text-align: center;
+}
 .login_form {
     display: flex;
     flex-direction: column;

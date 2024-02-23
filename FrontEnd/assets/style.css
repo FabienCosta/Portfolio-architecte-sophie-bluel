@@ -126,6 +126,40 @@ li:hover {
 	margin-bottom: 1em;
 }
 
+/* ? Modal CSS */
+.modal_button {
+	color: black;
+	font-size: small;
+	text-decoration: none;
+	margin: -10% 0% 0% 2%;
+	letter-spacing: 3px;
+}
+#modal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+.modal_box {
+	width: 50rem;
+	height: 45rem;
+	background-color: white;
+	border-radius: 10px;
+
+}
+.modal_close {
+	margin: 2% 0% 0% 95%;
+	font-size: 2em;
+	
+
+}
 /* ? Login CSS */
 .main_login {
     display: flex;
@@ -183,8 +217,6 @@ li:hover {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	
-	
 }
 .button_filter {
 	margin: 1% 1% 1% 1%;

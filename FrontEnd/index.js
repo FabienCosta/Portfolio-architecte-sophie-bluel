@@ -173,5 +173,3 @@ removeModal();
 displayModal();
 deleteWorks();
 
-// ? Ajout bouton de suppression
-// ? Ajout bouton de modification

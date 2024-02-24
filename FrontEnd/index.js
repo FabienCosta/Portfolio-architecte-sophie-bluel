@@ -123,3 +123,55 @@ filterAll();
 filterObjects();
 filterApartment();
 filterHotel();
+
+
+// ? Modal
+const modal = document.getElementById("modal");
+const modalBox = document.querySelector('.modal_box');
+const closeModal = document.querySelector(".modal_close");
+const modalWorks = document.querySelector(".modal_works");
+const worksTitle = document.querySelector(".modal_title");
+worksTitle.classList.add("modal_title");
+
+function removeModal() {
+  closeModal.addEventListener("click", function () {
+    modal.style.display = "none";
+  }); 
+modal.addEventListener('click', function(event) {
+    if (event.target == modal || event.target != modalBox && !modalBox.contains(event.target)) {
+        modal.style.display = "none";
+    }
+});
+}
+
+
+function displayModal (){
+  const modify = document.querySelector(".modal_button");
+  modify.addEventListener("click", function () {
+    modal.style.display = "flex";
+  });
+  console.log(modify);
+}
+
+function deleteWorks() {
+  const works = data;
+  worksTitle.innerHTML = "Galerie photo";
+  
+  for (let i = 0; i < works.length; i++) {
+    let figure = document.createElement("figure");
+    let image = document.createElement("img");
+    figure.classList.add("modal_figure");
+    image.src = data[i].imageUrl;
+    image.alt = data[i].title;
+    figure.appendChild(image);
+    modalWorks.appendChild(figure);
+}
+}
+
+// ? function call Modal
+removeModal();
+displayModal();
+deleteWorks();
+
+// ? Ajout bouton de suppression
+// ? Ajout bouton de modification

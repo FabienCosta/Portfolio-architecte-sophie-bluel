@@ -150,22 +150,37 @@ function displayModal (){
   modify.addEventListener("click", function () {
     modal.style.display = "flex";
   });
-  console.log(modify);
 }
 
 function deleteWorks() {
   const works = data;
   worksTitle.innerHTML = "Galerie photo";
-  
+  let token = localStorage.getItem("token");
   for (let i = 0; i < works.length; i++) {
     let figure = document.createElement("figure");
     let image = document.createElement("img");
+    let deleteButton = document.createElement("div");
     figure.classList.add("modal_figure");
     image.src = data[i].imageUrl;
     image.alt = data[i].title;
     figure.appendChild(image);
     modalWorks.appendChild(figure);
-}
+    deleteButton.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
+    deleteButton.classList.add("modal_delete");
+    figure.appendChild(deleteButton);
+    deleteButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      works = fetch(`http://localhost:5678/api/works/${works[i].id}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization":  `Bearer ${token}`,
+        },
+      });
+      console.log(works);
+      console.log(works);
+      console.log(works[i].id);
+    });
+  }
 }
 
 // ? function call Modal
@@ -173,3 +188,7 @@ removeModal();
 displayModal();
 deleteWorks();
 
+const login = document.querySelector(".login");
+login.addEventListener("click", function () {
+  window.location.href = "login.html";
+});

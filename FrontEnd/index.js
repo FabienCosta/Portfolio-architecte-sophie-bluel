@@ -8,6 +8,14 @@ let sectionId = document.getElementById("projects");
 const filter = document.createElement("div");
 filter.classList.add("filter");
 sectionId.appendChild(filter);
+const modal = document.getElementById("modal");
+const modalBox = document.querySelector('.modal_box');
+const closeModal = document.querySelector(".modal_close");
+const modalWorks = document.querySelector(".modal_works");
+const worksTitle = document.querySelector(".modal_title");
+worksTitle.classList.add("modal_title");
+const modify = document.querySelector(".modal_button");
+
 
 // ? Functions
 function galeryCreation() {
@@ -126,12 +134,7 @@ filterHotel();
 
 
 // ? Modal
-const modal = document.getElementById("modal");
-const modalBox = document.querySelector('.modal_box');
-const closeModal = document.querySelector(".modal_close");
-const modalWorks = document.querySelector(".modal_works");
-const worksTitle = document.querySelector(".modal_title");
-worksTitle.classList.add("modal_title");
+
 
 function removeModal() {
   closeModal.addEventListener("click", function () {
@@ -146,7 +149,6 @@ modal.addEventListener('click', function(event) {
 
 
 function displayModal (){
-  const modify = document.querySelector(".modal_button");
   modify.addEventListener("click", function () {
     modal.style.display = "flex";
   });
@@ -188,7 +190,24 @@ removeModal();
 displayModal();
 deleteWorks();
 
-const login = document.querySelector(".login");
-login.addEventListener("click", function () {
-  window.location.href = "login.html";
-});
+const token = sessionStorage.getItem("token");
+console.log(token);
+const loginButton = document.querySelector(".login")
+
+if (token) {
+  loginButton.innerHTML = "logout";
+  loginButton.addEventListener("click", function () {
+    sessionStorage.removeItem("token");
+    window.location.href = "index.html";
+  });
+} if (!token) {
+  modify.style.display = "none";
+  filter.style.display = "none";
+  loginButton.innerHTML = "login";
+  loginButton.addEventListener("click", function () {
+    window.location.href = "login.html";
+  });
+  
+} else {
+  
+}

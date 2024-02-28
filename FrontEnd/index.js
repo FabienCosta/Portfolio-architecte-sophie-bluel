@@ -22,14 +22,14 @@ worksTitle.classList.add("modal_title");
 // ? Functions
 function loginMamagement () {
   if (token) {
+    modify.style.display = "none";
+    filter.style.display = "none";
     loginButton.innerHTML = "logout";
     loginButton.addEventListener("click", function () {
       sessionStorage.removeItem("token");
       window.location.href = "index.html";
     });
   } if (!token) {
-    modify.style.display = "none";
-    filter.style.display = "none";
     loginButton.innerHTML = "login";
     loginButton.addEventListener("click", function () {
       window.location.href = "login.html";
@@ -163,10 +163,10 @@ modal.addEventListener('click', function(event) {
 });
 }
 
-function deleteWorks() {
+async function displayModalWorks() {
+  modalWorks.innerHTML = "";
   const works = data;
   worksTitle.innerHTML = "Galerie photo";
-  let token = localStorage.getItem("token");
   for (let i = 0; i < works.length; i++) {
     let figure = document.createElement("figure");
     let image = document.createElement("img");
@@ -179,23 +179,31 @@ function deleteWorks() {
     deleteButton.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
     deleteButton.classList.add("modal_delete");
     figure.appendChild(deleteButton);
-    deleteButton.addEventListener("click", function (event) {
-      event.preventDefault();
-      works = fetch(`http://localhost:5678/api/works/${works[i].id}`, {
+  }
+}
+
+async function deleteWork() {
+  const trash = document.querySelectorAll(".fa-trash-can");
+  let token = sessionStorage.getItem("token");
+  for (let i = 0 ; i < trash.length; i++) {
+    trash[i].addEventListener("click", async function () {
+      const response = await fetch(`http://localhost:5678/api/works/${data[i]._id}`, {
         method: "DELETE",
         headers: {
-          "Authorization":  `Bearer ${token}`,
-        },
+          "Authorization": `Bearer ${token}`
+        }
       });
-      console.log(works);
-      console.log(works);
-      console.log(works[i].id);
+      console.log(response);
+      // const data = await response.json();
+      displayModalWorks();
+      console.log(trash[i]);
     });
   }
 }
 
 
 // ? function call
+loginMamagement();
 galeryCreation();
 filterAll();
 filterObjects();
@@ -203,8 +211,8 @@ filterApartment();
 filterHotel();
 removeModal();
 displayModal();
-deleteWorks();
-loginMamagement();
+displayModalWorks();
+deleteWork();
 
 // ? factoriser le code
 // ? commenter le code

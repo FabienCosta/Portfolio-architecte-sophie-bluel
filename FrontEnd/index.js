@@ -1,23 +1,43 @@
-// Description: This file is used to display the gallery of the projects and to filter them by category
+// ? API Call
 const response = await fetch("http://localhost:5678/api/works");
 const data = await response.json();
+const token = sessionStorage.getItem("token");
 
 // ? Global Variables
 let galleryItem = document.querySelector(".gallery");
 let sectionId = document.getElementById("projects");
 const filter = document.createElement("div");
-filter.classList.add("filter");
-sectionId.appendChild(filter);
 const modal = document.getElementById("modal");
 const modalBox = document.querySelector('.modal_box');
 const closeModal = document.querySelector(".modal_close");
 const modalWorks = document.querySelector(".modal_works");
 const worksTitle = document.querySelector(".modal_title");
-worksTitle.classList.add("modal_title");
 const modify = document.querySelector(".modal_button");
+const loginButton = document.querySelector(".login")
+filter.classList.add("filter");
+sectionId.appendChild(filter);
+worksTitle.classList.add("modal_title");
 
 
 // ? Functions
+function loginMamagement () {
+  if (token) {
+    loginButton.innerHTML = "logout";
+    loginButton.addEventListener("click", function () {
+      sessionStorage.removeItem("token");
+      window.location.href = "index.html";
+    });
+  } if (!token) {
+    modify.style.display = "none";
+    filter.style.display = "none";
+    loginButton.innerHTML = "login";
+    loginButton.addEventListener("click", function () {
+      window.location.href = "login.html";
+    });
+    
+  } 
+}
+
 function galeryCreation() {
   for (let i = 0; i < data.length; i++) {
     let figure = document.createElement("figure");
@@ -125,16 +145,12 @@ function filterHotel() {
   filter.appendChild(buttonHotel);
 }
 
-// ? function call
-galeryCreation();
-filterAll();
-filterObjects();
-filterApartment();
-filterHotel();
-
-
 // ? Modal
-
+function displayModal (){
+  modify.addEventListener("click", function () {
+    modal.style.display = "flex";
+  });
+}
 
 function removeModal() {
   closeModal.addEventListener("click", function () {
@@ -145,13 +161,6 @@ modal.addEventListener('click', function(event) {
         modal.style.display = "none";
     }
 });
-}
-
-
-function displayModal (){
-  modify.addEventListener("click", function () {
-    modal.style.display = "flex";
-  });
 }
 
 function deleteWorks() {
@@ -185,29 +194,17 @@ function deleteWorks() {
   }
 }
 
-// ? function call Modal
+
+// ? function call
+galeryCreation();
+filterAll();
+filterObjects();
+filterApartment();
+filterHotel();
 removeModal();
 displayModal();
 deleteWorks();
+loginMamagement();
 
-const token = sessionStorage.getItem("token");
-console.log(token);
-const loginButton = document.querySelector(".login")
-
-if (token) {
-  loginButton.innerHTML = "logout";
-  loginButton.addEventListener("click", function () {
-    sessionStorage.removeItem("token");
-    window.location.href = "index.html";
-  });
-} if (!token) {
-  modify.style.display = "none";
-  filter.style.display = "none";
-  loginButton.innerHTML = "login";
-  loginButton.addEventListener("click", function () {
-    window.location.href = "login.html";
-  });
-  
-} else {
-  
-}
+// ? factoriser le code
+// ? commenter le code

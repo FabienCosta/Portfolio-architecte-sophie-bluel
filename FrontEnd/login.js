@@ -2,9 +2,9 @@
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("current-password");
 const loginButton = document.querySelector(".login_button");
+
 // ? evenement sur le bouton de connexion
 function login() {
-
   const loginForm = document.querySelector(".login_form");
   loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -27,7 +27,6 @@ function login() {
       const data = await response.json();
       const token = data.token;
       sessionStorage.setItem("token", token);
-      console.log(token);
       window.location.href = "index.html";
       
     } catch (error) {
@@ -40,5 +39,3 @@ function login() {
 login();
 // ? factoriser le code
 // ? commenter le code
-// ? tester le code
-// ? gerer le logout

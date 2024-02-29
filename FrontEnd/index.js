@@ -8,41 +8,42 @@ let galleryItem = document.querySelector(".gallery");
 let sectionId = document.getElementById("projects");
 const filter = document.createElement("div");
 const modal = document.getElementById("modal");
-const modalBox = document.querySelector('.modal_box');
+const modalBox = document.querySelector(".modal_box");
 const closeModal = document.querySelector(".modal_close");
 const modalWorks = document.querySelector(".modal_works");
 const worksTitle = document.querySelector(".modal_title");
 const modify = document.querySelector(".modal_button");
-const loginButton = document.querySelector(".login")
+const loginButton = document.querySelector(".login");
 filter.classList.add("filter");
 sectionId.appendChild(filter);
 worksTitle.classList.add("modal_title");
 
-
 // ? Functions
-function loginMamagement () {
+function loginMamagement() {
   if (token) {
-    modify.style.display = "none";
     filter.style.display = "none";
     loginButton.innerHTML = "logout";
     loginButton.addEventListener("click", function () {
       sessionStorage.removeItem("token");
       window.location.href = "index.html";
     });
-  } if (!token) {
+  }
+  if (!token) {
+    modify.style.display = "none";
     loginButton.innerHTML = "login";
     loginButton.addEventListener("click", function () {
       window.location.href = "login.html";
     });
-    
-  } 
+  }
 }
 
 function galeryCreation() {
   for (let i = 0; i < data.length; i++) {
+    modalWorks.innerHTML = "";
     let figure = document.createElement("figure");
     let image = document.createElement("img");
     let title = document.createElement("figcaption");
+    figure.classList.add("gallery_figure");
     image.src = data[i].imageUrl;
     image.alt = data[i].title;
     title.textContent = data[i].title;
@@ -146,7 +147,7 @@ function filterHotel() {
 }
 
 // ? Modal
-function displayModal (){
+function displayModal() {
   modify.addEventListener("click", function () {
     modal.style.display = "flex";
   });
@@ -155,12 +156,15 @@ function displayModal (){
 function removeModal() {
   closeModal.addEventListener("click", function () {
     modal.style.display = "none";
-  }); 
-modal.addEventListener('click', function(event) {
-    if (event.target == modal || event.target != modalBox && !modalBox.contains(event.target)) {
-        modal.style.display = "none";
+  });
+  modal.addEventListener("click", function (event) {
+    if (
+      event.target == modal ||
+      (event.target != modalBox && !modalBox.contains(event.target))
+    ) {
+      modal.style.display = "none";
     }
-});
+  });
 }
 
 async function displayModalWorks() {
@@ -174,6 +178,7 @@ async function displayModalWorks() {
     figure.classList.add("modal_figure");
     image.src = data[i].imageUrl;
     image.alt = data[i].title;
+    image.id = data[i].id;
     figure.appendChild(image);
     modalWorks.appendChild(figure);
     deleteButton.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
@@ -181,26 +186,6 @@ async function displayModalWorks() {
     figure.appendChild(deleteButton);
   }
 }
-
-async function deleteWork() {
-  const trash = document.querySelectorAll(".fa-trash-can");
-  let token = sessionStorage.getItem("token");
-  for (let i = 0 ; i < trash.length; i++) {
-    trash[i].addEventListener("click", async function () {
-      const response = await fetch(`http://localhost:5678/api/works/${data[i]._id}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-      console.log(response);
-      // const data = await response.json();
-      displayModalWorks();
-      console.log(trash[i]);
-    });
-  }
-}
-
 
 // ? function call
 loginMamagement();
@@ -212,7 +197,28 @@ filterHotel();
 removeModal();
 displayModal();
 displayModalWorks();
-deleteWork();
 
 // ? factoriser le code
 // ? commenter le code
+const modalFigure = document.querySelectorAll(".modal_figure");
+const figure = document.querySelectorAll(".gallery_figure");
+console.log(figure[0]);
+
+const deleteButton = document.querySelectorAll(".modal_delete");
+for (let i = 0; i < deleteButton.length; i++) {
+  deleteButton[i].addEventListener("click", async function () {
+    console.log(data[i]);
+    await fetch(`http://localhost:5678/api/works/${data[i].id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (modalFigure[i].remove()) {
+      displayModalWorks();
+    }
+    if (figure[i].remove()) {
+      galeryCreation();
+    }
+  });
+}

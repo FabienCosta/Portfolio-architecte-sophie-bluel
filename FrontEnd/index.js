@@ -198,27 +198,36 @@ removeModal();
 displayModal();
 displayModalWorks();
 
-// ? factoriser le code
-// ? commenter le code
+
 const modalFigure = document.querySelectorAll(".modal_figure");
 const figure = document.querySelectorAll(".gallery_figure");
-console.log(figure[0]);
-
 const deleteButton = document.querySelectorAll(".modal_delete");
-for (let i = 0; i < deleteButton.length; i++) {
-  deleteButton[i].addEventListener("click", async function () {
-    console.log(data[i]);
-    await fetch(`http://localhost:5678/api/works/${data[i].id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+
+async function deleteWork() {
+  for (let i = 0; i < deleteButton.length; i++) {
+    deleteButton[i].addEventListener("click", async function () {
+      await fetch(`http://localhost:5678/api/works/${data[i].id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (modalFigure[i].remove()) {
+        displayModalWorks();
+      }
+      if (figure[i].remove()) {
+        galeryCreation();
+      }
     });
-    if (modalFigure[i].remove()) {
-      displayModalWorks();
-    }
-    if (figure[i].remove()) {
-      galeryCreation();
-    }
-  });
+  }
 }
+deleteWork(); 
+
+
+
+
+
+
+
+// ? factoriser le code
+// ? commenter le code

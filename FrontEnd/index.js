@@ -147,6 +147,7 @@ function filterHotel() {
 }
 
 // ? Modal
+
 function displayModal() {
   modify.addEventListener("click", function () {
     modal.style.display = "flex";
@@ -223,11 +224,31 @@ async function deleteWork() {
 }
 deleteWork(); 
 
-
-
-
-
-
-
 // ? factoriser le code
 // ? commenter le code
+
+const modalSubmit = document.querySelector(".modal_submit");
+modalSubmit.addEventListener("click", async function () {
+  worksTitle.innerHTML = "Ajout photo";
+  modalWorks.innerHTML = "";
+  modalWorks.classList.remove("modal_works");
+  modalWorks.classList.add("modal_upload");
+  const form =document.createElement("form");
+  modalWorks.appendChild(form);
+  const input = document.createElement("input");
+  input.type = "file";
+  input.name = "image";
+  input.id = "image";
+  form.appendChild(input);
+  const labelTitle = document.createElement("label");
+  labelTitle.for = "title";
+  labelTitle.textContent = "Titre";
+  form.appendChild(labelTitle);
+  const inputTitle = document.createElement("input");
+  inputTitle.type = "text";
+  inputTitle.name = "title";
+  inputTitle.id = "title";
+  form.appendChild(inputTitle);
+  
+});
+console.log(modalSubmit);

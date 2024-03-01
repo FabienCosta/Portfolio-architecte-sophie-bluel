@@ -246,7 +246,10 @@ li:hover {
   grid-gap: 10px;
   grid-template-columns: repeat(5, 1fr);
   border-bottom: 1px solid #bdbdbd;
-
+}
+.modal_upload {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 .modal_figure {
   width: 100%;

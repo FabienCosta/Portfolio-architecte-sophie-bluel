@@ -199,7 +199,6 @@ removeModal();
 displayModal();
 displayModalWorks();
 
-
 const modalFigure = document.querySelectorAll(".modal_figure");
 const figure = document.querySelectorAll(".gallery_figure");
 const deleteButton = document.querySelectorAll(".modal_delete");
@@ -222,33 +221,55 @@ async function deleteWork() {
     });
   }
 }
-deleteWork(); 
+deleteWork();
 
 // ? factoriser le code
 // ? commenter le code
-
-const modalSubmit = document.querySelector(".modal_submit");
-modalSubmit.addEventListener("click", async function () {
-  worksTitle.innerHTML = "Ajout photo";
-  modalWorks.innerHTML = "";
-  modalWorks.classList.remove("modal_works");
-  modalWorks.classList.add("modal_upload");
-  const form =document.createElement("form");
-  modalWorks.appendChild(form);
-  const input = document.createElement("input");
-  input.type = "file";
-  input.name = "image";
-  input.id = "image";
-  form.appendChild(input);
-  const labelTitle = document.createElement("label");
-  labelTitle.for = "title";
-  labelTitle.textContent = "Titre";
-  form.appendChild(labelTitle);
-  const inputTitle = document.createElement("input");
-  inputTitle.type = "text";
-  inputTitle.name = "title";
-  inputTitle.id = "title";
-  form.appendChild(inputTitle);
+function addworks() {
+  const modalSubmit = document.querySelector(".modal_submit");
+  modalSubmit.addEventListener("click", async function () {
+    worksTitle.innerHTML = "Ajout photo";
+    modalWorks.innerHTML = "";
+    modalWorks.classList.remove("modal_works");
+    modalWorks.classList.add("modal_upload");
+    modalWorks.innerHTML = `
+    <form class="modal-form" action="" enctype="multipart/form-data" >
+              <div class='modal-form-photo'>
+                <i class="fa-regular fa-image modal-form-photo-icon"></i>
+                <label for="photo" class="modal-form-photo-label">+ Ajouter photo</label>
+                <input type="file" name="photo" id="photo" class="modal-form-photo-input">
+                <p class="modal-form-photo-text">jpg, png : 4mo max</p>
+              </div>
   
-});
-console.log(modalSubmit);
+              <div class='modal-form-title'>
+                <label for="titre" class='modal-form-title-text'>Titre</label>
+                <input type="text" name="titre" id="titre" class="modal-form-title-input">
+              </div>
+  
+              <div class='modal-form-category'>
+                <label for="categorie">Catégorie</label>
+                <select name="categorie" id="categorie" class="modal-form-category-select">
+                  <option value="1">Objets</option>
+                  <option value="2">Appartements</option>
+                  <option value="3">Hôtels \& restaurants</option>
+                </select>
+              </div>
+            </form>
+    `;
+    const modalSubmitBtn = document.querySelector(".modal_submit");
+    modalSubmitBtn.innerHTML = "Valider";
+    modalSubmitBtn.style.backgroundColor = "gray";
+  });
+}
+addworks();
+
+const modalSubmitBtn = document.querySelector(".modal_submit");
+modalSubmitBtn.addEventListener("click", () => {
+  const returnArrow = document.createElement("i");
+  returnArrow.classList.add("fa-solid", "fa-arrow-left");
+  modalBox.appendChild(returnArrow);
+  returnArrow.addEventListener("click", () => {
+    addworks().display = "none";
+    displayModalWorks();
+  });
+})

@@ -18,7 +18,7 @@ filter.classList.add("filter");
 sectionId.appendChild(filter);
 worksTitle.classList.add("modal_title");
 
-// ? Functions
+// ? Functions homepage
 function loginMamagement() {
   if (token) {
     filter.style.display = "none";
@@ -263,17 +263,30 @@ function addworks() {
 }
 addworks();
 
-const modalSubmitBtn = document.querySelector(".modal_submit");
-modalSubmitBtn.addEventListener("click", () => {
-  const returnArrow = document.createElement("i");
-  returnArrow.classList.add("fa-solid", "fa-arrow-left");
-  modalBox.appendChild(returnArrow);
-  returnArrow.addEventListener("click", () => {
-    console.log("click");
-    modalWorks.classList.remove("modal_upload");
-    modalWorks.classList.add("modal_works");
-    displayModalWorks();
-    modalSubmitBtn.innerHTML = "Ajouter photo";
-    modalSubmitBtn.style.backgroundColor = "#1d6154";
-})
-});
+
+function returnToModalGalery () {
+  const modalSubmitBtn = document.querySelector(".modal_submit");
+  modalSubmitBtn.addEventListener("click", () => {
+    const returnArrow = document.createElement("i");
+    returnArrow.classList.add("fa-solid", "fa-arrow-left");
+    modalBox.appendChild(returnArrow);
+    returnArrow.addEventListener("click", () => {
+      modalWorks.classList.remove("modal_upload");
+      modalWorks.classList.add("modal_works");
+      displayModalWorks();
+      modalSubmitBtn.innerHTML = "Ajouter photo";
+      modalSubmitBtn.style.backgroundColor = "#1d6154";
+  })
+  });
+}
+returnToModalGalery();
+
+// ! Comment faire pour recuperer les valeurs des formulaires avant qu'ils soient créés
+ const photoForm = document.querySelector(".modal-form-photo-input");
+ const titleForm = document.querySelector(".modal-form-title-input");
+ const categoryForm = document.querySelector(".modal-form-category-select");
+ const submitForm = document.querySelector(".modal_submit");
+ console.log(photoForm);
+ console.log(titleForm);
+ console.log(categoryForm);
+ console.log(submitForm);

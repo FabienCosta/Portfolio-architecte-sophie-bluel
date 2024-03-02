@@ -269,7 +269,11 @@ modalSubmitBtn.addEventListener("click", () => {
   returnArrow.classList.add("fa-solid", "fa-arrow-left");
   modalBox.appendChild(returnArrow);
   returnArrow.addEventListener("click", () => {
-    addworks().display = "none";
+    console.log("click");
+    modalWorks.classList.remove("modal_upload");
+    modalWorks.classList.add("modal_works");
     displayModalWorks();
-  });
+    modalSubmitBtn.innerHTML = "Ajouter photo";
+    modalSubmitBtn.style.backgroundColor = "#1d6154";
 })
+});

@@ -1,6 +1,8 @@
 // ? API Call
 const response = await fetch("http://localhost:5678/api/works");
 const data = await response.json();
+const fetchCategory = await fetch("http://localhost:5678/api/categories");
+const categoryData = await fetchCategory.json();
 const token = sessionStorage.getItem("token");
 
 // ? Global Variables
@@ -239,6 +241,7 @@ function addworks() {
                 <label for="photo" class="modal-form-photo-label">+ Ajouter photo</label>
                 <input type="file" name="photo" id="photo" class="modal-form-photo-input">
                 <p class="modal-form-photo-text">jpg, png : 4mo max</p>
+                <img class="modal-form-photo-previewImg" src="#" alt="Aperçut de l'image" style="display: none">
               </div>
   
               <div class='modal-form-title'>
@@ -249,9 +252,7 @@ function addworks() {
               <div class='modal-form-category'>
                 <label for="categorie">Catégorie</label>
                 <select name="categorie" id="categorie" class="modal-form-category-select">
-                  <option value="1">Objets</option>
-                  <option value="2">Appartements</option>
-                  <option value="3">Hôtels \& restaurants</option>
+                  
                 </select>
               </div>
             </form>
@@ -259,12 +260,23 @@ function addworks() {
     const modalSubmitBtn = document.querySelector(".modal_submit");
     modalSubmitBtn.innerHTML = "Valider";
     modalSubmitBtn.style.backgroundColor = "gray";
+    uploadWork();
+    addCategory();
+    displayImgModal();
   });
 }
 addworks();
+function addCategory() {
+  const formAddCategory = document.querySelector(".modal-form-category-select");
+  for (let i = 0; i < categoryData.length; i++) {
+    let option = document.createElement("option");
+    option.value = categoryData[i].id;
+    option.textContent = categoryData[i].name;
+    formAddCategory.appendChild(option);
+  }
+}
 
-
-function returnToModalGalery () {
+function returnToModalGalery() {
   const modalSubmitBtn = document.querySelector(".modal_submit");
   modalSubmitBtn.addEventListener("click", () => {
     const returnArrow = document.createElement("i");
@@ -276,17 +288,34 @@ function returnToModalGalery () {
       displayModalWorks();
       modalSubmitBtn.innerHTML = "Ajouter photo";
       modalSubmitBtn.style.backgroundColor = "#1d6154";
-  })
+    });
   });
 }
 returnToModalGalery();
 
-// ! Comment faire pour recuperer les valeurs des formulaires avant qu'ils soient créés
- const photoForm = document.querySelector(".modal-form-photo-input");
- const titleForm = document.querySelector(".modal-form-title-input");
- const categoryForm = document.querySelector(".modal-form-category-select");
- const submitForm = document.querySelector(".modal_submit");
- console.log(photoForm);
- console.log(titleForm);
- console.log(categoryForm);
- console.log(submitForm);
+function uploadWork() {
+
+}
+
+function displayImgModal() {
+  const previewImg = document.querySelector(".modal-form-photo-previewImg");
+  const iconImg = document.querySelector(".modal-form-photo-icon");
+  const labelImg = document.querySelector(".modal-form-photo-label");
+  const inputImg = document.querySelector(".modal-form-photo-input");
+  const textImg = document.querySelector(".modal-form-photo-text");
+  inputImg.addEventListener("change", () => {
+    const file = inputImg.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        previewImg.src = e.target.result;
+        previewImg.style.display = "block";
+        labelImg.style.display = "none";
+        iconImg.style.display = "none";
+        textImg.style.display = "none";
+        previewImg.setAttribute("src", e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+});
+}

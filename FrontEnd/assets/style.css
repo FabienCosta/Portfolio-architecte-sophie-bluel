@@ -365,6 +365,12 @@ li:hover {
   top: 5em;
   left: 10em;
 }
+.modal-form-alert {
+  color: red;
+  text-align: center;
+  margin: 2% 0% 2% 0%;
+
+}
 
 /* ? Login CSS */
 .main_login {

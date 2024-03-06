@@ -263,6 +263,7 @@ function addworks() {
     uploadWork();
     addCategory();
     displayImgModal();
+    formCompletedError();
   });
 }
 addworks();
@@ -321,12 +322,12 @@ function displayImgModal() {
 function uploadWork() {
   try {
     const form = document.querySelector(".modal-form");
-    const image = document.getElementById("image").files[0];
-    console.log(image);
-    const title = document.querySelector(".modal-form-title-input");
-    const category = document.querySelector(".modal-form-category-select");
+    const button = document.querySelector(".modal-form-button");
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      const image = document.getElementById("image").files[0];
+      const title = document.querySelector(".modal-form-title-input");
+      const category = document.querySelector(".modal-form-category-select");
       const formDatas = new FormData();
       formDatas.append("image", image);
       formDatas.append("title", title.value);
@@ -338,17 +339,31 @@ function uploadWork() {
         },
         body: formDatas,
       });
-      if (!response.ok) {
-        const message =  response.text();
-        console.error('Error status:', response.status, 'Message:', message);
-      }
+
       // form.reset();
       // displayModalWorks();
       // galeryCreation();
-    })
-    
+    });
   } catch (error) {
     console.log(error);
   }
 }
 
+function formCompletedError() {
+  const form = document.querySelector(".modal-form");
+  const image = document.getElementById("image");
+  const title = document.querySelector(".modal-form-title-input");
+  const category = document.querySelector(".modal-form-category-select");
+  const button = document.querySelector(".modal-form-button");
+
+  form.addEventListener("input", () => {
+    if (title.value !== "" && category.value !== "" && image.value !== "") {
+      button.style.backgroundColor = "#1d6154";
+    } else if  (title.value === "" || category.value === "" || image.value === "") {
+      const alert = document.createElement("p");
+      alert.textContent = "Veuillez remplir tous les champs";
+      alert.classList.add("modal-form-alert");
+      form.appendChild(alert);
+    }
+  });
+}

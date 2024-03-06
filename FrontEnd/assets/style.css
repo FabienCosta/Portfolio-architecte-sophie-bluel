@@ -350,6 +350,15 @@ li:hover {
   height: 3em;
   margin: 1% 0% 0% 0%;
 }
+.modal-form-button {
+  background-color: #a7a7a7;
+  margin: 2% 0% 2% 30%;
+  width: 12em;
+  height: 3em;
+  border-radius: 20px;
+  font-family: "Syne";
+  border: none;
+}
 .fa-arrow-left {
   font-size: 200%;
   position: absolute;

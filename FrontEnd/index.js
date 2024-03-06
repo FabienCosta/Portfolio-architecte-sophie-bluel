@@ -255,11 +255,11 @@ function addworks() {
                   
                 </select>
               </div>
+              <button class="modal-form-button" >Valider</button>
             </form>
     `;
     const modalSubmitBtn = document.querySelector(".modal_submit");
-    modalSubmitBtn.innerHTML = "Valider";
-    modalSubmitBtn.style.backgroundColor = "gray";
+    modalSubmitBtn.style.display = "none";
     uploadWork();
     addCategory();
     displayImgModal();
@@ -286,16 +286,13 @@ function returnToModalGalery() {
       modalWorks.classList.remove("modal_upload");
       modalWorks.classList.add("modal_works");
       displayModalWorks();
+      modalSubmitBtn.style.display = "block";
       modalSubmitBtn.innerHTML = "Ajouter photo";
       modalSubmitBtn.style.backgroundColor = "#1d6154";
     });
   });
 }
 returnToModalGalery();
-
-function uploadWork() {
-
-}
 
 function displayImgModal() {
   const previewImg = document.querySelector(".modal-form-photo-previewImg");
@@ -317,5 +314,33 @@ function displayImgModal() {
       };
       reader.readAsDataURL(file);
     }
-});
+  });
 }
+
+function uploadWork() {
+  const form = document.querySelector(".modal-form");
+  const image = document.querySelector(".modal-form-photo-previewImg");
+  const title = document.querySelector(".modal-form-title-input");
+  const category = document.querySelector(".modal-form-category-select");
+  const formDatas = new FormData(form);
+  formDatas.append("title", title.value);
+  formDatas.append("category", category.value);
+  formDatas.append("image", image.src);
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formDatas,
+    });
+    if (response.ok) {
+      console.log("ok");
+    } else {
+      console.log("not ok");
+    }
+  });
+}
+
+// form.reset();

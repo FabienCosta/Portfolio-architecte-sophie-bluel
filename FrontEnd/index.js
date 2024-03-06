@@ -238,10 +238,10 @@ function addworks() {
     <form class="modal-form" action="" enctype="multipart/form-data" >
               <div class='modal-form-photo'>
                 <i class="fa-regular fa-image modal-form-photo-icon"></i>
-                <label for="photo" class="modal-form-photo-label">+ Ajouter photo</label>
-                <input type="file" name="photo" id="photo" class="modal-form-photo-input">
+                <label for="image" class="modal-form-photo-label">+ Ajouter photo</label>
+                <input type="file" name="image" id="image" class="modal-form-photo-input">
                 <p class="modal-form-photo-text">jpg, png : 4mo max</p>
-                <img class="modal-form-photo-previewImg" src="#" alt="Aperçut de l'image" style="display: none">
+                <img class="modal-form-photo-previewImg" src="#" alt="Image du projet" style="display: none">
               </div>
   
               <div class='modal-form-title'>
@@ -273,6 +273,7 @@ function addCategory() {
     option.value = categoryData[i].id;
     option.textContent = categoryData[i].name;
     formAddCategory.appendChild(option);
+    formAddCategory.value = categoryData[i].id;
   }
 }
 
@@ -318,29 +319,36 @@ function displayImgModal() {
 }
 
 function uploadWork() {
-  const form = document.querySelector(".modal-form");
-  const image = document.querySelector(".modal-form-photo-previewImg");
-  const title = document.querySelector(".modal-form-title-input");
-  const category = document.querySelector(".modal-form-category-select");
-  const formDatas = new FormData(form);
-  formDatas.append("title", title.value);
-  formDatas.append("category", category.value);
-  formDatas.append("image", image.src);
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const response = await fetch("http://localhost:5678/api/works", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formDatas,
-    });
-    if (response.ok) {
-      console.log("ok");
-    } else {
-      console.log("not ok");
-    }
-  });
+  try {
+    const form = document.querySelector(".modal-form");
+    const image = document.getElementById("image").files[0];
+    console.log(image);
+    const title = document.querySelector(".modal-form-title-input");
+    const category = document.querySelector(".modal-form-category-select");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formDatas = new FormData();
+      formDatas.append("image", image);
+      formDatas.append("title", title.value);
+      formDatas.append("category", category.value);
+      const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formDatas,
+      });
+      if (!response.ok) {
+        const message =  response.text();
+        console.error('Error status:', response.status, 'Message:', message);
+      }
+      // form.reset();
+      // displayModalWorks();
+      // galeryCreation();
+    })
+    
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-// form.reset();

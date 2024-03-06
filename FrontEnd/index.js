@@ -339,13 +339,37 @@ function uploadWork() {
         },
         body: formDatas,
       });
-
-      // form.reset();
-      // displayModalWorks();
-      // galeryCreation();
+      if (response.ok) {
+        formValidDisplayGalery();
+      }
     });
   } catch (error) {
     console.log(error);
+  }
+}
+
+function formValidDisplayGalery() {
+  modalWorks.classList.remove("modal_upload");
+  modalWorks.classList.add("modal_works");
+  modalWorks.innerHTML = "";
+  const works = data;
+  worksTitle.innerHTML = "Galerie photo";
+  for (let i = 0; i < works.length; i++) {
+    let figure = document.createElement("figure");
+    let image = document.createElement("img");
+    let deleteButton = document.createElement("div");
+    figure.classList.add("modal_figure");
+    image.src = data[i].imageUrl;
+    image.alt = data[i].title;
+    image.id = data[i].id;
+    figure.appendChild(image);
+    modalWorks.appendChild(figure);
+    deleteButton.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
+    deleteButton.classList.add("modal_delete");
+    figure.appendChild(deleteButton);
+    const modalSubmitBtn = document.querySelector(".modal_submit");
+    modalSubmitBtn.style.display = "flex";
+    modalSubmitBtn.classList.add("modal_submit_return");
   }
 }
 
@@ -355,14 +379,15 @@ function formCompletedError() {
   const title = document.querySelector(".modal-form-title-input");
   const category = document.querySelector(".modal-form-category-select");
   const button = document.querySelector(".modal-form-button");
+  const alert = document.createElement("p");
+  alert.classList.add("modal-form-alert");
 
   form.addEventListener("input", () => {
     if (title.value !== "" && category.value !== "" && image.value !== "") {
       button.style.backgroundColor = "#1d6154";
-    } else if  (title.value === "" || category.value === "" || image.value === "") {
-      const alert = document.createElement("p");
+      alert.textContent = "";
+    } else {
       alert.textContent = "Veuillez remplir tous les champs";
-      alert.classList.add("modal-form-alert");
       form.appendChild(alert);
     }
   });

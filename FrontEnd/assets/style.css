@@ -265,6 +265,9 @@ li:hover {
   font-family: "Syne";
   border: none;
 }
+.modal_submit_return {
+  padding: 1.5% 0% 0% 2%;
+}
 .modal_delete {
   position: absolute;
   z-index: 1;

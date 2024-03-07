@@ -291,6 +291,7 @@ function returnToModalGalery() {
       modalSubmitBtn.style.display = "block";
       modalSubmitBtn.innerHTML = "Ajouter photo";
       modalSubmitBtn.style.backgroundColor = "#1d6154";
+      returnArrow.style.display = "none";
     });
   });
 }

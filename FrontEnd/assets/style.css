@@ -364,9 +364,8 @@ li:hover {
 }
 .fa-arrow-left {
   font-size: 200%;
-  position: absolute;
-  top: 5em;
-  left: 10em;
+  position: fixed;
+  margin: -44% 0% 0% 1%;
 }
 .modal-form-alert {
   color: red;

@@ -225,8 +225,6 @@ async function deleteWork() {
 }
 deleteWork();
 
-// ? factoriser le code
-// ? commenter le code
 function addworks() {
   const modalSubmit = document.querySelector(".modal_submit");
   modalSubmit.addEventListener("click", async function () {
@@ -339,23 +337,27 @@ function uploadWork() {
           Authorization: `Bearer ${token}`,
         },
         body: formDatas,
-      });
-      if (response.ok) {
-        formValidDisplayGalery();
-      }
+      })
+        
+      DisplayNewGaleryModal();
+      displayNewGalery();
+      
     });
   } catch (error) {
     console.log(error);
   }
 }
 
-function formValidDisplayGalery() {
+async function DisplayNewGaleryModal() {
   modalWorks.classList.remove("modal_upload");
   modalWorks.classList.add("modal_works");
-  modalWorks.innerHTML = "";
-  const works = data;
+  const arrowLeft = document.querySelector(".fa-arrow-left");
+  const works = await fetch("http://localhost:5678/api/works");
+  const data = await works.json();
+
   worksTitle.innerHTML = "Galerie photo";
-  for (let i = 0; i < works.length; i++) {
+  modalWorks.innerHTML = "";
+  for (let i = 0; i < data.length; i++) {
     let figure = document.createElement("figure");
     let image = document.createElement("img");
     let deleteButton = document.createElement("div");
@@ -371,6 +373,26 @@ function formValidDisplayGalery() {
     const modalSubmitBtn = document.querySelector(".modal_submit");
     modalSubmitBtn.style.display = "flex";
     modalSubmitBtn.classList.add("modal_submit_return");
+    arrowLeft.style.display = "none";
+    deleteWork();
+  }
+}
+
+async function displayNewGalery () {
+  galleryItem.innerHTML = "";
+  const works = await fetch("http://localhost:5678/api/works");
+  const data = await works.json();
+  for (let i = 0; i < data.length; i++) {
+    let figure = document.createElement("figure");
+    let image = document.createElement("img");
+    let title = document.createElement("figcaption");
+    figure.classList.add("gallery_figure");
+    image.src = data[i].imageUrl;
+    image.alt = data[i].title;
+    title.textContent = data[i].title;
+    figure.appendChild(image);
+    figure.appendChild(title);
+    galleryItem.appendChild(figure);
   }
 }
 

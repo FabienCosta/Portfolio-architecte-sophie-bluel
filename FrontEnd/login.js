@@ -1,3 +1,4 @@
+// ! 2- Connexion
 // ? Variables Globales
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("current-password");
@@ -11,11 +12,13 @@ function login() {
     const email = emailInput.value;
     const password = passwordInput.value;
     try {
+      // fetch en post pour autoriser la connexion
       const response = await fetch("http://localhost:5678/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        // envoi des données de connexion au format json et en string
         body: JSON.stringify({
           email: email,
           password: password,
@@ -26,7 +29,9 @@ function login() {
       }
       const data = await response.json();
       const token = data.token;
+      // stockage du token dans le sessionStorage
       sessionStorage.setItem("token", token);
+      // redirection vers la page d'accueil
       window.location.href = "index.html";
       
     } catch (error) {
@@ -37,5 +42,3 @@ function login() {
   });
 }
 login();
-// ? factoriser le code
-// ? commenter le code

@@ -4,7 +4,6 @@ const data = await response.json();
 const fetchCategory = await fetch("http://localhost:5678/api/categories");
 const categoryData = await fetchCategory.json();
 const token = sessionStorage.getItem("token");
-
 // ? Global Variables
 let galleryItem = document.querySelector(".gallery");
 let sectionId = document.getElementById("projects");
@@ -94,92 +93,29 @@ function filterAll() {
   }
 }
 
-function filterObjects() {
-  try {
-    // filtre sur les categories sur chaque element de data qui possede la categorie "Objets"
-    let dataObjects = data.filter((data) => data.category.name === "Objets");
-    const buttonObjects = document.createElement("button");
-    buttonObjects.classList.add("button_filter");
-    buttonObjects.textContent = "Objets";
-    buttonObjects.addEventListener("click", function () {
-      //  au click sur le bouton, on vide la galerie et on affiche les images correspondantes
+// ! filter works
+function filterWorks() {
+  categoryData.forEach(categoryName => {
+    let dataWorks = data.filter((data) => data.category.name === categoryName.name);
+    const buttonWorks = document.createElement("button");
+    buttonWorks.classList.add("button_filter");
+    buttonWorks.textContent = categoryName.name;
+    buttonWorks.addEventListener("click", function () {
       galleryItem.innerHTML = "";
-      // boucle sur les data pour afficher les images
-      for (let i = 0; i < dataObjects.length; i++) {
+      for (let i = 0; i < dataWorks.length; i++) {
         let figure = document.createElement("figure");
         let image = document.createElement("img");
         let title = document.createElement("figcaption");
-        image.src = dataObjects[i].imageUrl;
-        image.alt = dataObjects[i].title;
-        title.textContent = dataObjects[i].title;
+        image.src = dataWorks[i].imageUrl;
+        image.alt = dataWorks[i].title;
+        title.textContent = dataWorks[i].title;
         figure.appendChild(image);
         figure.appendChild(title);
         galleryItem.appendChild(figure);
       }
     });
-    filter.appendChild(buttonObjects);
-    
-  } catch (error) {
-   console.log(error); 
-  }
-}
-
-function filterApartment() {
-  try {
-    let dataApartment = data.filter(
-      (data) => data.category.name === "Appartements"
-    );
-    const buttonApartment = document.createElement("button");
-    buttonApartment.classList.add("button_filter");
-    buttonApartment.textContent = "Appartements";
-    buttonApartment.addEventListener("click", function () {
-      galleryItem.innerHTML = "";
-      for (let i = 0; i < dataApartment.length; i++) {
-        let figure = document.createElement("figure");
-        let image = document.createElement("img");
-        let title = document.createElement("figcaption");
-        image.src = dataApartment[i].imageUrl;
-        image.alt = dataApartment[i].title;
-        title.textContent = dataApartment[i].title;
-        figure.appendChild(image);
-        figure.appendChild(title);
-        galleryItem.appendChild(figure);
-      }
-    });
-    filter.appendChild(buttonApartment);
-    
-  } catch (error) {
-    console.log(error); 
-  }
-}
-
-function filterHotel() {
-  try {
-    let dataHotel = data.filter(
-      (data) => data.category.name === "Hotels & restaurants"
-    );
-    const buttonHotel = document.createElement("button");
-    buttonHotel.classList.add("button_filter");
-    buttonHotel.textContent = "Hotel & Restaurants";
-    buttonHotel.addEventListener("click", function () {
-      galleryItem.innerHTML = "";
-      for (let i = 0; i < dataHotel.length; i++) {
-        let figure = document.createElement("figure");
-        let image = document.createElement("img");
-        let title = document.createElement("figcaption");
-        image.src = dataHotel[i].imageUrl;
-        image.alt = dataHotel[i].title;
-        title.textContent = dataHotel[i].title;
-        figure.appendChild(image);
-        figure.appendChild(title);
-        galleryItem.appendChild(figure);
-      }
-    });
-    filter.appendChild(buttonHotel);
-    
-  } catch (error) {
-    console.log(error); 
-  }
+    filter.appendChild(buttonWorks);
+  });
 }
 
 // ? functions Modal
@@ -243,9 +179,7 @@ async function displayModalWorks() {
 loginMamagement();
 galeryCreation();
 filterAll();
-filterObjects();
-filterApartment();
-filterHotel();
+filterWorks();
 removeModal();
 displayModal();
 displayModalWorks();

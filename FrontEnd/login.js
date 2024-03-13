@@ -33,7 +33,7 @@ function login() {
       sessionStorage.setItem("token", token);
       // redirection vers la page d'accueil
       window.location.href = "index.html";
-      
+      // gestion des erreurs
     } catch (error) {
       console.error(error);
       const errorMessage = document.querySelector(".login_error_msg");
